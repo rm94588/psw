@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Lista de Tarefas</title>
+</head>
+<body>
+    <h1>Lista de Tarefas</h1>
+    <p><a href="/cadastro">Nova tarefa</a></p>
+    <table border="1" cellpadding="6">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Prazo</th>
+                <th>Situação</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (linhasTabela && linhasTabela.length) { %>
+                <% linhasTabela.forEach(function(t){ %>
+                    <tr>
+                        <td><%= t.id_tarefa %></td>
+                        <td><%= t.nome_tarefa %></td>
+                        <td><%= moment(t.prazo_tarefa).format('L') %></td>
+                        <td><%= t.situacao_tarefa %></td>
+                        <td>
+                            <a href="/alterar?id=<%= t.id_tarefa %>">Alterar</a>
+                            |
+                            <a href="/excluir-logico?id=<%= t.id_tarefa %>" onclick="return confirm('Confirma exclusão lógica desta tarefa?')">Excluir (lógico)</a>
+                            |
+                            <a href="/excluir-fisico?id=<%= t.id_tarefa %>" onclick="return confirm('Confirma exclusão física?')">Excluir (físico)</a>
+                        </td>
+                    </tr>
+                <% }) %>
+            <% } else { %>
+                <tr><td colspan="5">Nenhuma tarefa encontrada.</td></tr>
+            <% } %>
+        </tbody>
+    </table>
+</body>
+</html>
